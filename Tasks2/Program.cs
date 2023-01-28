@@ -24,21 +24,7 @@ namespace Tasks2
                         tasks.Task1();
                         break;
                     case 2:
-                        Console.WriteLine("Задание 2");
-                        Console.WriteLine("1 вариант - а) с предоставленными данными \n" + "2 вариант - б) с данными, введеными с клавиатуры");
-                        Console.WriteLine("Введите вариант который хотите выбрать: ");
-                        int numberVariant = Convert.ToInt32(Console.ReadLine());
-                        switch (numberVariant)
-                        {
-                            case 1:
-                                tasks.Task2Variant1();
-                                break;
-
-                            case 2:
-                                tasks.Task2Variant2();
-                                break;
-
-                        }
+                        tasks.Task2Variant();
                         break;
                 }
 

@@ -18,8 +18,6 @@ namespace Tasks2
         {
             Console.WriteLine("Средняя скорость трамвая " + speed + "км/ч");
         }
-
-
     }
 }
 

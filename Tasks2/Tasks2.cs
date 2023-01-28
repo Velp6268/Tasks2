@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+
 namespace Tasks2
 {
     public class Tasks
@@ -24,118 +26,97 @@ namespace Tasks2
 
         }
 
-        public void Task2Variant1()
+
+
+        public void Task2Variant()
         {
-            int n = 7;
-            double t_a = 0, t_b = 0, S = 0, p = 0;
+            Console.WriteLine("Задание 2");
+            Console.WriteLine("1 вариант - а) с предоставленными данными \n" + "2 вариант - б) с данными, введеными с клавиатуры");
+            Console.WriteLine("Введите вариант который хотите выбрать: ");
+            int numberVariant = Convert.ToInt32(Console.ReadLine());
+            double resultSpearman = 0;
+            int[] arrX = new int [7];
+            int[] arrY = new int [7];
+            int[] arrXRank = new int[7];
+            int[] arrYRank = new int[7];
 
-            Variable[] a = new Variable[n];
-
-            for (int i = 0; i < n; i++)
+            switch (numberVariant)
             {
-                a[i] = new Variable();
+                case 1:
+                    arrX = new int [] { 123, 142, 125, 154, 133, 119, 148 };
+                    arrY = new int [] { 134, 142, 163, 127, 142, 155, 120 };
+                    break; 
+                case 2:        
+                    Console.WriteLine("Введите кол-во строк");
+                    int n = Convert.ToInt32(Console.ReadLine());
+                    arrX = new int[n];
+                    arrY = new int[n];
+                    Console.WriteLine("Введите");
+
+                    for (int i = 0; i < n; i++)
+                    {
+                        Console.Write("Введите X[" + (i + 1) + "] = ");
+                        arrX[i] = Convert.ToInt32(Console.ReadLine());
+                        Console.Write("Введите Y[" + (i + 1) + "] = ");
+                        arrY[i] = Convert.ToInt32(Console.ReadLine());
+                    }
+                    arrXRank = new int[n];
+                    arrYRank = new int[n];
+                    break;
             }
 
-            Sort_RankXY ob = new Sort_RankXY();
+            arrXRank = SortRank(arrX, arrXRank);
+            arrYRank = SortRank(arrY, arrYRank);
 
-            a[0].x = 123;
-            a[1].x = 142;
-            a[2].x = 125;
-            a[3].x = 154;
-            a[4].x = 133;
-            a[5].x = 119;
-            a[6].x = 148;
+            resultSpearman = CalculationSperman(arrXRank, arrYRank);
 
-            a[0].y = 134;
-            a[1].y = 142;
-            a[2].y = 163;
-            a[3].y = 127;
-            a[4].y = 142;
-            a[5].y = 155;
-            a[6].y = 120;
-
-            Console.WriteLine("Предоставленные данные X и Y: ");
-
-            for (int i = 0; i < n; i++)
-            {
-                Console.WriteLine(a[i].x + "   " + a[i].y);
-            }
-            Console.WriteLine();
-
-            ob.QuickX(0, n - 1, ref a);
-            ob.RankX(n - 1, ref t_a, ref a);
-            ob.QuickY(0, n - 1, ref a);
-            ob.RankY(n - 1, ref t_b, ref a);
-
-            Console.WriteLine("Переформированные ранги X и Y: ");
-            for (int i = 0; i < n; i++)
-            {
-                Console.WriteLine(a[i].rx + "   " + a[i].ry);
-            }
-
-            Console.WriteLine("Матрица рангов: ");
-            for (int i = 0; i < n; i++)
-            {
-                a[i].dr = Math.Pow(a[i].rx - a[i].ry, 2); Console.WriteLine("{0:f4}", a[i].dr);
-                S = S + a[i].dr;
-            }
-            Console.WriteLine("Находим сумму разности квадратов X и Y ((dx-dy)^2), после складываем полученные результаты, и получаем, то что,");
-            Console.WriteLine("S=" + S);
-
-            Console.WriteLine("Затем вычесляем кф Спирмена");
-            p = 1 - 6 * (S + t_a + t_b) / (n * (n * n - 1));
-            Console.WriteLine("p = {0:f10}", p);
+            Console.WriteLine("P = " + resultSpearman);
         }
 
-        public void Task2Variant2()
+        public int[] SortRank(int[] arr, int[] resultArr)
         {
-            int n;
-            double t_a = 0, t_b = 0, S = 0, p = 0;
+            int maxValue = int.MaxValue;
+            int count = 1;
 
-            Console.WriteLine("Количесво строк: ");
-            n = Convert.ToInt32(Console.ReadLine());
-
-            Variable[] a = new Variable[n];
-
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
-                a[i] = new Variable();
+                int temp = 0;
+                for (int j = 0; j < arr.Length; j++)
+                {
+                    if (arr[j] > temp && arr[j] < maxValue)
+                    {
+                        temp = arr[j];
+                    }
+                }
+                for (int k = 0; k < arr.Length; k++)
+                {
+                    maxValue = temp;
+                    if (arr[k] == maxValue)
+                    {
+                        resultArr[k] = count;
+                        count++;
+                    }
+                }
+                
             }
-
-            Sort_RankXY ob = new Sort_RankXY();
-
-            for (int i = 0; i < n; i++)
-            {
-                Console.Write("Введите x[" + (i + 1) + "] = ");
-                a[i].x = Convert.ToDouble(Console.ReadLine());
-                Console.Write("Введите y[" + (i + 1) + "] = ");
-                a[i].y = Convert.ToDouble(Console.ReadLine());
-            }
-            ob.QuickX(0, n - 1, ref a);
-            ob.RankX(n - 1, ref t_a, ref a);
-            ob.QuickY(0, n - 1, ref a);
-            ob.RankY(n - 1, ref t_b, ref a);
-
-            Console.WriteLine("Переформированные ранги X и Y: ");
-            for (int i = 0; i < n; i++)
-            {
-                Console.WriteLine(a[i].rx + "   " + a[i].ry);
-            }
-
-            Console.WriteLine("Матрица рангов: ");
-            for (int i = 0; i < n; i++)
-            {
-                a[i].dr = Math.Pow(a[i].rx - a[i].ry, 2); Console.WriteLine("{0:f4}", a[i].dr);
-                S = S + a[i].dr;
-            }
-            Console.WriteLine("Находим сумму разности квадратов X и Y ((dx-dy)^2), после складываем полученные результаты, и получаем, то что,");
-            Console.WriteLine("S=" + S);
-
-            Console.WriteLine("Затем вычесляем кф Спирмена");
-            p = 1 - 6 * (S + t_a + t_b) / (n * (n * n - 1));
-            Console.WriteLine("p = {0:f10}", p);
+            return resultArr;
         }
 
+        public double CalculationSperman(int[] arrX, int[] arrY)
+        {
+
+            double coefficientS = 0;
+            double coefficientP = 0;
+
+            for (int i = 0; i < arrX.Length; i++)
+            {
+                coefficientS += Math.Pow((arrX[i] - arrY[i]), 2);
+            }
+
+            coefficientP = 1 - ((6 * coefficientS) / (Math.Pow(arrX.Length, 3) - arrX.Length));
+
+            return coefficientP;
+        }
     }
 }
 
