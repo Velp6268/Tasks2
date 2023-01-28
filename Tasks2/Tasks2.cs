@@ -5,7 +5,7 @@ namespace Tasks2
 {
     public class Tasks
     {
-        Metods metods = new Metods();
+        Metods metods = new Metods(); 
 
         public void Task1()
         {
@@ -25,8 +25,6 @@ namespace Tasks2
             metods.Task1(speedHuman, comingTramsNumber, onComingTramsNumber);
 
         }
-
-
 
         public void Task2Variant()
         {
@@ -73,7 +71,7 @@ namespace Tasks2
             Console.WriteLine("P = " + resultSpearman);
         }
 
-        public int[] SortRank(int[] arr, int[] resultArr)
+        public int[] SortRank(int[] arr, int[] resultArr) //Метод для сортировки массива и присвоении ранга 
         {
             int maxValue = int.MaxValue;
             int count = 1;
@@ -102,9 +100,8 @@ namespace Tasks2
             return resultArr;
         }
 
-        public double CalculationSperman(int[] arrX, int[] arrY)
+        public double CalculationSperman(int[] arrX, int[] arrY) //вычесление суммы квадратов рахности, а затем вычесление Спирмена 
         {
-
             double coefficientS = 0;
             double coefficientP = 0;
 
