@@ -14,8 +14,6 @@ namespace Tasks2
             do
             {
                 Console.Clear();
-
-
                 Console.WriteLine("Введите номер задания: ");
                 int numberTask = Convert.ToInt32(Console.ReadLine());
                 switch (numberTask)
@@ -27,7 +25,6 @@ namespace Tasks2
                         tasks.Task2Variant();
                         break;
                 }
-
                 Console.WriteLine("\nЧто бы закончить, нажмите клавишу 'q', если хотите продолжить нажмите любую клавишу. ");
                 cki = Console.ReadKey(true);
 
